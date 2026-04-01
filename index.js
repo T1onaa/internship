@@ -6,9 +6,6 @@ const port = 3000;
 
 app.use(express.json());
 
-/* ================= USERS ================= */
-
-// Create user
 app.post("/user", (req, res) => {
   const { fullname, username, age, gender } = req.body;
 
@@ -29,7 +26,6 @@ app.post("/user", (req, res) => {
   );
 });
 
-// Get users
 app.get("/users", (req, res) => {
   db.query("SELECT * FROM users", (err, result) => {
     if (err) throw err;
@@ -37,7 +33,6 @@ app.get("/users", (req, res) => {
   });
 });
 
-// Delete user
 app.delete("/user/:id", (req, res) => {
   db.query("DELETE FROM users WHERE id=?", [req.params.id], (err, result) => {
     if (err) throw err;
@@ -45,10 +40,6 @@ app.delete("/user/:id", (req, res) => {
   });
 });
 
-
-/* ================= SERVICES ================= */
-
-// Create service
 app.post("/services", (req, res) => {
   const { serviceCode, serviceName, servicePrice } = req.body;
 
@@ -62,7 +53,6 @@ app.post("/services", (req, res) => {
   );
 });
 
-// Get services
 app.get("/services", (req, res) => {
   db.query("SELECT * FROM services", (err, result) => {
     if (err) throw err;
@@ -70,7 +60,6 @@ app.get("/services", (req, res) => {
   });
 });
 
-// Update service
 app.put("/services/:code", (req, res) => {
   db.query(
     "UPDATE services SET ? WHERE serviceCode=?",
@@ -108,7 +97,6 @@ app.get("/cars", (req, res) => {
   });
 });
 
-// Delete car
 app.delete("/car/:plate", (req, res) => {
   db.query(
     "DELETE FROM car WHERE plateNumber=?",
@@ -120,10 +108,6 @@ app.delete("/car/:plate", (req, res) => {
   );
 });
 
-
-/* ================= SERVICE RECORD ================= */
-
-// Create record
 app.post("/record", (req, res) => {
   const { serviceDate, plateNumber, serviceCode } = req.body;
 
@@ -137,7 +121,6 @@ app.post("/record", (req, res) => {
   );
 });
 
-// Get records (JOIN)
 app.get("/records", (req, res) => {
   db.query(
     `SELECT * FROM servicerecord 
@@ -150,10 +133,6 @@ app.get("/records", (req, res) => {
   );
 });
 
-
-/* ================= PAYMENT ================= */
-
-// Create payment
 app.post("/payment", (req, res) => {
   const { amountPaid, paymentDate, recordNumber } = req.body;
 
@@ -167,7 +146,6 @@ app.post("/payment", (req, res) => {
   );
 });
 
-// Get payments (JOIN FULL DETAILS)
 app.get("/payments", (req, res) => {
   db.query(
     `SELECT * FROM payment
@@ -179,9 +157,6 @@ app.get("/payments", (req, res) => {
     }
   );
 });
-
-
-/* ================= START SERVER ================= */
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
